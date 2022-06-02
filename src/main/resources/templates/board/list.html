@@ -8,8 +8,27 @@
     ></nav>
     <div class="container">
       <h2>Board</h2>
+      <div>total count:<span th:text="${#lists.size(boards)}"></span></div>
     </div>
-
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="board : ${boards}">
+          <td th:text="${board.id}">Mark</td>
+          <td th:text="${board.title}">Otto</td>
+          <td>jenn</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-end">
+      <a type="button" class="btn btn-dark" th:href="@{./form}">write</a>
+    </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

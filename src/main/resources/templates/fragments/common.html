@@ -80,7 +80,7 @@
               <a
                 class="nav-link"
                 th:classappend="${menu} == 'home'? 'active'"
-                href="/"
+                href="#" th:href="@{/}"
                 >Home<span class="sr-only" th:if="${menu} == 'home'"
                   >(current)</span
                 ></a
@@ -90,7 +90,7 @@
               <a
                 class="nav-link"
                 th:classappend="${menu} == 'board'? 'active'"
-                href="board/list"
+                href="#" th:href="@{board/list}"
                 >Board<span class="sr-only" th:if="${menu} == 'board'"
                   >(current)</span
                 ></a
