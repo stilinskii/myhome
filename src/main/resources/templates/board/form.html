@@ -14,24 +14,43 @@
         th:object="${board}"
         method="post"
       >
+        <input type="hidden" th:field="*{id}" />
         <div class="mb-3">
           <label for="title" class="form-label">title</label>
           <input
             th:field="*{title}"
             type="text"
             class="form-control"
+            th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'"
             id="title"
             placeholder=""
           />
+          <div
+            id="validationServer03Feedback"
+            class="invalid-feedback"
+            th:if="${#fields.hasErrors('title')}"
+            th:errors="*{title}"
+          >
+            Please enter title
+          </div>
         </div>
         <div class="mb-3">
           <label for="content" class="form-label">content</label>
           <textarea
             th:field="*{content}"
             class="form-control"
+            th:classappend="${#fields.hasErrors('content')} ? 'is-invalid'"
             id="content"
             rows="3"
           ></textarea>
+          <div
+            id="validationServer03Feedback"
+            class="invalid-feedback"
+            th:if="${#fields.hasErrors('content')}"
+            th:errors="*{content}"
+          >
+            Please enter content
+          </div>
         </div>
         <div class="text-end">
           <a th:href="@{./list}" type="button" class="btn btn-dark">cancle</a>
