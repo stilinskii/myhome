@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
   <head th:fragment="head(title)">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -106,17 +109,44 @@
                 <a class="nav-link disabled">Disabled</a>
               </li> -->
           </ul>
-          <!-- <form class="d-flex">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form> -->
+
+          <a
+            class="btn btn-outline-success mr-2"
+            th:href="@{/account/login}"
+            sec:authorize="!isAuthenticated()"
+            >Login</a
+          >
+          <a
+            class="btn btn-outline-success"
+            th:href="@{/account/register}"
+            sec:authorize="!isAuthenticated()"
+            >Sign up</a
+          >
+
+          <form
+            class="d-flex"
+            th:action="@{/logout}"
+            method="post"
+            sec:authorize="isAuthenticated()"
+          >
+            <!-- <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            /> -->
+            <span class="text-white mx-2" sec:authentication="name"
+              >사용자</span
+            >
+            <span
+              class="text-white mx-2"
+              sec:authentication="principal.authorities"
+              >권한</span
+            >
+            <button class="btn btn-outline-success" type="submit">
+              Logout
+            </button>
+          </form>
         </div>
       </div>
     </nav>
