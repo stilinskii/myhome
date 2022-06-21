@@ -1,13 +1,18 @@
 package com.godcoder.myhome.controller;
 
 import com.godcoder.myhome.model.Board;
+import com.godcoder.myhome.model.User;
 import com.godcoder.myhome.repository.BoardRepository;
+import com.godcoder.myhome.service.BoardService;
 import com.godcoder.myhome.validator.BoardValidator;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,13 +22,12 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 @RequestMapping("/board")
+@RequiredArgsConstructor
 public class BoardController {
 
-    @Autowired
-    private BoardRepository boardRepository;
-
-    @Autowired
-    private BoardValidator boardValidator;
+    private final BoardRepository boardRepository;
+    private final BoardService boardService;
+    private final BoardValidator boardValidator;
 
     //게시판 열면 보이는 화면
     @GetMapping("/list")
@@ -66,12 +70,15 @@ public class BoardController {
     }
 
     @PostMapping("/form")
-    public String formSubmit(@Valid Board board, BindingResult bindingResult){
+    public String formSubmit(@Valid Board board, BindingResult bindingResult, Authentication authentication){
         boardValidator.validate(board, bindingResult);
         if (bindingResult.hasErrors()) {
             return "board/form";
         }
-        boardRepository.save(board);
+//        Authentication a = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        log.info("username={}",username);
+        boardService.save(username, board);
         return "redirect:/board/list";
     }
 }
