@@ -32,11 +32,11 @@ public class UserApiController {
 
     // Single item
 
-//    @GetMapping("/users/{id}")
-//    User one(@PathVariable Long id) {
-//
-//        return repository.findById(id).orElse(null);
-//    }
+    @GetMapping("/users/{id}")
+    User one(@PathVariable Long id) {
+
+        return repository.findById(id).orElse(null);
+    }
 //
 //    @GetMapping("/users/{title}")
 //    User one(@PathVariable String title) {

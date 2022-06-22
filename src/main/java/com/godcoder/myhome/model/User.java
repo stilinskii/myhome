@@ -21,6 +21,7 @@ public class User {
 
 
     @ManyToMany
+    @JsonIgnore
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -31,7 +32,9 @@ public class User {
 
     //cascade 데이터에 반영, remove는 user가 삭제됐을때 게시글들도 같이 삭제
     //orphanRemoval 기본값 false, true 부모가 없는 데이터는 지운다?
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
+   //블팔요한 데이터를 가져오는 걸 막기위해 fetchtype lazy해줌. many로 끝나는것들은 lazy로 해주기
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Board> boards = new ArrayList<>();
 
 
